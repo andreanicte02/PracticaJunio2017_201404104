@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archivo>
+	<matriz>
+		<x>2</x>
+		<y>3</y>
+	</matriz>
+	<operaciones>
+		<operacion>2 8 + 4 * 7 -</operacion>
+		<operacion>2 6 +</operacion>
+		<operacion>2 6 -</operacion>
+		<operacion>27 24 - 7 4 + *</operacion>
+	</operaciones>
+</archivo>
