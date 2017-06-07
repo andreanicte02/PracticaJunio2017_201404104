@@ -1,4 +1,6 @@
 import commands
+import matriz
+import operaciones
 
 class usuario(object):
 	"""docstring for usuario"""

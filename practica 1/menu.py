@@ -3,34 +3,9 @@ import os
 from xml.etree import ElementTree
 from lxml import etree
 import usuarios
+import matriz
 
-class leer(object):
-	"""docstring for leer"""
-	def __init__(self):
-		self.arg = None
 
-	def lectura(self):
-		print 'ingrese la ruta del archivo:'
-		ruta = raw_input()
-		doc = etree.parse(str(ruta))
-		#print etree.tostring(doc,pretty_print=True ,xml_declaration=True, encoding="utf-8")
-		raiz = doc.getroot()
-		print raiz.tag
-		libro = raiz[0]
-		for child in raiz:
-			#print child.tag
-			if child.tag == 'matriz':
-				for child2 in child:
-					#print child2.tag
-					if child2.tag == 'x':
-						print child2.text
-					elif child2.tag == 'y':
-						print child2.text
-
-			elif child.tag == 'operaciones':
-				for child2 in child:
-					if child2.tag == 'operacion':
-						print child2.text
 
 
 
@@ -40,6 +15,32 @@ class inicio(object):
 	def __init__(self):
 		self.arg = None
 		self.users = usuarios.lusuario()
+
+
+	def lectura(self):
+		print 'ingrese la ruta del archivo:'
+		ruta = raw_input()
+		doc = etree.parse(str(ruta))
+		#print etree.tostring(doc,pretty_print=True ,xml_declaration=True, encoding="utf-8")
+		raiz = doc.getroot()
+		print raiz.tag
+		libro = raiz[0]
+		x=0
+		y=0
+		for child in raiz:
+			#print child.tag
+			if child.tag == 'matriz':
+				for child2 in child:
+					#print child2.tag
+					if child2.tag == 'x':
+						x = int(child2.text)
+					elif child2.tag == 'y':
+						y = int(child2.text)
+			elif child.tag == 'operaciones':
+				for child2 in child:
+					if child2.tag == 'operacion':
+						print child2.text
+
 
 	def crearusuarios(self):
 
@@ -146,6 +147,6 @@ class inicio(object):
 		
 
 
-i = leer()
+i = inicio()
 i.lectura()
 
