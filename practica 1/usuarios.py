@@ -1,6 +1,7 @@
 import commands
 import matriz
 import operaciones
+import matriz
 
 class usuario(object):
 	"""docstring for usuario"""
@@ -10,6 +11,9 @@ class usuario(object):
 		self.contra = contra
 		self.siguente = None
 		self.anterior = None
+		self.loper = operaciones.listaopera()
+		self.matiz = matriz.matriz()
+		self.trans = matriz.matriz()
 
 class lusuario(object):
 	"""docstring for lusuario"""
@@ -33,13 +37,42 @@ class lusuario(object):
 			elemento.anterior = temporal
 			elemento.siguente = self.primero
 
+
+	def opt(self):
+		nodoy = self.matiz.ladoy.primero
+
+		while nodoy!= None:
+			temporal = nodoy.listah.primero
+
+			while temporal != None:
+
+				self.trans(int(temporal.y), int(temporal.x), temporal.valor)
+
+				temporal = temporal.siguente
+			
+			nodoy = nodoy.abajo
+
 	def recorrer(self):
 		
+		reporte=''
 		temporal = self.primero
 		while temporal.siguente!= self.primero:
-			print 'el nombre es:'+ str(temporal.nombre)
+			reporte = str(reporte)+str(temporal.usuario)+'->'
 			temporal = temporal.siguente
-		print 'el nombre es:' + str(temporal.nombre)
+
+		reporte =str(reporte)+str(temporal.usuario)
+		print reporte
+
+		
+		re = ''
+		while temporal!= self.primero:
+			re= str(re)+str(temporal.usuario)+'->'
+			temporal = temporal.anterior
+
+		re = str(re)+str(temporal.usuario)
+		print re	
+
+		#print 'el nombre es:' + str(temporal.nombre)
 
 	def existe(self, nombre):
 		temporal = self.primero

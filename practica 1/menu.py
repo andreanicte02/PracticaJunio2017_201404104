@@ -4,7 +4,8 @@ from xml.etree import ElementTree
 from lxml import etree
 import usuarios
 import matriz
-
+import operaciones
+import os.path as path
 
 
 
@@ -15,15 +16,15 @@ class inicio(object):
 	def __init__(self):
 		self.arg = None
 		self.users = usuarios.lusuario()
+		self.auxus = None
 
 
-	def lectura(self):
-		print 'ingrese la ruta del archivo:'
-		ruta = raw_input()
+	def lectura(self, ruta, cola, mat, trans):
+
 		doc = etree.parse(str(ruta))
 		#print etree.tostring(doc,pretty_print=True ,xml_declaration=True, encoding="utf-8")
 		raiz = doc.getroot()
-		print raiz.tag
+		#print raiz.tag
 		libro = raiz[0]
 		x=0
 		y=0
@@ -39,11 +40,57 @@ class inicio(object):
 			elif child.tag == 'operaciones':
 				for child2 in child:
 					if child2.tag == 'operacion':
-						print child2.text
+						#print child2.text
+						#insertar en cola
+						cola.insertar(operaciones.noperacion(child2.text))
+
+
+		cola.recorrer()
+		
+		topex = 0
+		topey = 0
+		while topey < y: #crear matriz
+			
+			while topex < x:
+
+				mat.insertar(topex,topey,str(topex)+ '-' +str(topey))
+				#print topex
+
+				topex = topex +1	
+
+ 			#print topey
+ 			topex = 0
+			topey = topey +1
+
+
+		topex = 0
+		topey = 0
+		while topey < x: #crear matriz
+			
+			while topex < y:
+
+				trans.insertar(topex,topey,str(topex)+ '-' +str(topey))
+				#print topex
+
+				topex = topex +1	
+
+ 			#print topey
+ 			topex = 0
+			topey = topey +1
+
+
+
+
+
+
+		
+
+
 
 
 	def crearusuarios(self):
 
+		print '--------------Crear usuarios-----------'
 
 		if self.users.primero == None:
 			print 'ingrese el usuario'
@@ -69,8 +116,68 @@ class inicio(object):
 		return True #exito	
 		#users.insertar(usuarios.usuario(nombre,nus,contra))
 
-	def menusistmea(self):
-		pass
+	def operarmatriz(self, mat, trans):
+
+		man = True
+		while man==True:			
+			print '-------------opear matriz--------------'
+			print '1. ingresar dato'
+			print '2. operar tranpsuesta'
+			print '3. mostrar matriz original'
+			print '4. mostrar matriz tranpsuesta'
+			print '5. regresar \n'
+
+			selec= raw_input()
+
+			if selec == '5':
+				man=False
+			elif selec == '1':
+				x = 0
+				y = 0 
+
+				print 'Ingrese la pos en x:'
+				x=raw_input()
+				print 'Ingrese la pos en y:'
+				y=raw_input()
+				x= int(x)
+				y= int(y)
+
+				nodo = mat.verificar(x,y)
+				if nodo != None:
+					print 'Ingrese el dato:'
+					f= raw_input()
+					nodo.valor = f
+					
+
+				else:
+					print 'la matriz no cuenta con esas posiciones'
+
+
+
+			elif selec == '2': #operar tarnaspuesta
+	
+				nodoy = mat.ladoy.primero
+
+				while nodoy!= None:
+					temporal = nodoy.listah.primero
+
+					while temporal != None:
+
+						aux=trans.verificar(temporal.y, temporal.x)
+						if aux!= None:
+							aux.valor = temporal.valor
+						#trans.insertar(int(temporal.y), int(temporal.x), temporal.valor)
+
+						temporal = temporal.siguiente
+			
+					nodoy = nodoy.abajo		
+
+			elif selec == '3':
+				print mat.recorrer()
+
+			elif selec == '4':	
+				print trans.recorrer()
+		
 
 	def ingresaralsistema(self):
 		if self.users.primero == None:
@@ -81,13 +188,14 @@ class inicio(object):
 		us = raw_input()
 		print 'ingrese la contrasena'
 		contra = raw_input()
-		nodo = self.users.buscar(us,contra)
+		nodo = self.users.buscar(us,contra) #nodo con el que se ingreso
 
 		if nodo != None:
-			print 'Ingreso al sistema'
+			auxus = nodo
+			
 			man = True
 			while man == True:
-				print '\n\n-------------------------'
+				print '\n\n----------Ingreso al sistema---------------'
 				print '1. Leer archivo'
 				print '2. Resolver Operaciones'
 				print '3. Operar Matriz'
@@ -97,20 +205,31 @@ class inicio(object):
 				des = raw_input()
 
 				if des =='1':
-					pass
+
+					print 'ingrese la ruta del archivo'
+					ruta = raw_input()
+					if path.exists(ruta):
+						print 'existe la rtua'
+						self.lectura(ruta, nodo.loper, nodo.matiz, nodo.trans)
+						#print nodo.matiz.recorrer()
+
+					else:
+						print 'ruta equivocada'
+
 				elif des =='2':
 					pass
 
 				elif des =='3':
-					pass
+					self.operarmatriz(nodo.matiz, nodo.trans)
 
 				elif des =='4':
-					pass
+					self.users.recorrer()
 
 				elif des =='5':
-					pass
+					nodo.loper.recorrer()
 
 				elif des =='6':
+					auxus= None
 					man = False
 
 
@@ -126,7 +245,9 @@ class inicio(object):
 	def paso1(self):
 		des=''
 		fin = 0
+
 		while fin == 0:
+			print '--------menu principal--------'
 			print '1. Crear usuario'
 			print '2. Ingresar al sistema'
 			print '3. Salir del programa'
@@ -138,7 +259,8 @@ class inicio(object):
 
 			elif des == 1: #crear usuario
 				if self.crearusuarios() == True:
-					self.users.recorrer()
+					#self.users.recorrer()
+					pass
 
 			else:
 				pass
@@ -148,5 +270,4 @@ class inicio(object):
 
 
 i = inicio()
-i.lectura()
-
+i.paso1()
