@@ -315,11 +315,12 @@ class matriz(object):
         temp= self.ladoy.primero
         while temp != None :
             temp2= temp.listah.primero
+            juntar = str(juntar)+'|'
             while temp2!= None:
                 juntar=str(juntar)+str(temp2.valor)+'   '
                 temp2 = temp2.siguiente
 
-            juntar = str(juntar) + '\n'
+            juntar = str(juntar) + '|\n'
             temp=temp.abajo
 
         return juntar

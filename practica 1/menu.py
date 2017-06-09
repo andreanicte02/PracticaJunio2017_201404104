@@ -6,6 +6,7 @@ import usuarios
 import matriz
 import operaciones
 import os.path as path
+import pila
 
 
 
@@ -45,7 +46,6 @@ class inicio(object):
 						cola.insertar(operaciones.noperacion(child2.text))
 
 
-		cola.recorrer()
 		
 		topex = 0
 		topey = 0
@@ -116,6 +116,7 @@ class inicio(object):
 		return True #exito	
 		#users.insertar(usuarios.usuario(nombre,nus,contra))
 
+
 	def operarmatriz(self, mat, trans):
 
 		man = True
@@ -177,6 +178,63 @@ class inicio(object):
 
 			elif selec == '4':	
 				print trans.recorrer()
+
+	def ResOpe(self, cola):
+		
+		if cola.primero != None:
+			opera= cola.dequeque()
+			print 'se va resolver la siguiente operacion:' + opera
+			opera2 = opera.split(' ')
+			lip = pila.lpila()
+
+
+			
+			i = 0
+			while i < len(opera2):
+
+
+				chun = opera2[i]
+				lip.insertar(pila.nodopila(chun))
+				primero = 0
+				segundo = 0
+
+				if lip.primero != None:
+
+					if chun == '*' or chun == '+' or chun == '-':
+						
+						print 'los datos en la pila son los siguientes:----------'
+						lip.recorrer()
+
+						signo = lip.pop()
+						segundo = lip.pop()
+						primero = lip.pop()
+						result = 0
+
+						print 'la operacion que se va realizar es:' + str(primero) + ' '+str(signo) + ' '+str(segundo)
+						if signo == '*':
+							result = int(primero) * int(segundo) 
+							lip.insertar(pila.nodopila(result))
+						elif signo == '+':
+							result  = int (primero) + int (segundo)
+							lip.insertar(pila.nodopila(result))
+
+						elif signo == '-':
+							print primero
+							print segundo
+
+							result = int(primero) - int(segundo)
+							print 'prueba'
+							print result
+							lip.insertar(pila.nodopila(result))		
+
+						print 'el resultado es: '+ str(result)		
+
+				i = i + 1
+
+			print '----------El resultado FINAL es:----------'
+			lip.recorrer()
+
+		
 		
 
 	def ingresaralsistema(self):
@@ -217,7 +275,9 @@ class inicio(object):
 						print 'ruta equivocada'
 
 				elif des =='2':
-					pass
+					if nodo.loper.primero == None: #ACA ME QUEDE
+						print 'No se ha cargado ningun archivo'
+					self.ResOpe(nodo.loper)
 
 				elif des =='3':
 					self.operarmatriz(nodo.matiz, nodo.trans)
@@ -247,7 +307,7 @@ class inicio(object):
 		fin = 0
 
 		while fin == 0:
-			print '--------menu principal--------'
+			print '--------menu principal: 201404104--------'
 			print '1. Crear usuario'
 			print '2. Ingresar al sistema'
 			print '3. Salir del programa'

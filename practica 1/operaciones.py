@@ -3,6 +3,7 @@ import commands
 class noperacion(object):
 	"""docstring for operacion"""
 	def __init__(self,operacion):
+		self.estado = False
 		self.operacion = operacion
 		self.siguiente = None
 
@@ -42,12 +43,14 @@ class listaopera(object):
 	def recorrer(self):
 		
 		temporal = self.primero
-
+		conta = 0
+		juntar =''
 		while temporal!= None:
-
-			print str(temporal.operacion)
-
+			juntar = str(juntar) + 'indice '+ str(conta)+ ': '+str(temporal.operacion)+'\n'
+			#print str(temporal.operacion)
+			conta = conta +1
 			temporal = temporal.siguiente
+		print str(juntar)
 
 
 
