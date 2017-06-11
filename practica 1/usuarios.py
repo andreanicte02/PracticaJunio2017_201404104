@@ -61,6 +61,7 @@ class lusuario(object):
 			temporal = temporal.siguente
 
 		reporte =str(reporte)+str(temporal.usuario)
+		print 'Usuarios:'
 		print reporte
 
 		
@@ -84,30 +85,6 @@ class lusuario(object):
 			return True #si es true existe
 		else:
 			return False
-
-	def graficar(self):
-		archi = open('usuarios.dot','w')
-		archi.write('digraph Ilustrasion5{\n')
-		archi.write('node [shape=record fontsize=10 fontname=\" Verdana\"style=filled];\n')
-		contador = 0
-		temporal = self.primero
-		while temporal.siguente != self.primero:
-			contador = contador +1
-			archi.write('node'+str(temporal.usuario)+'[label="' + str(temporal.usuario)+ '"];\n')
-			temporal= temporal.siguente
-		archi.write('node'+str(temporal.usuario)+'[label="' + str(temporal.usuario)+ '"];\n')
-		
-		temporal = self.primero
-		while temporal.siguente != self.primero:
-			archi.write('node'+str(temporal.usuario)+'->node'+ str(temporal.siguente.usuario)+ ';\n')
-			archi.write('node'+str(temporal.usuario)+'->node'+ str(temporal.anterior.usuario)+ ';\n')
-			temporal= temporal.siguente
-		archi.write('node'+str(temporal.usuario)+'->node'+ str(temporal.siguente.usuario)+ ';\n')
-		archi.write('node'+str(temporal.usuario)+'->node'+ str(temporal.anterior.usuario)+ ';\n')
-		
-		archi.write('\n}')
-		archi.close()	
-		commands.getoutput('dot -Tpng usuarios.dot -o usuarios.png')
 
 	def buscar(self, nombre, contra):
 		temporal = self.primero

@@ -3,7 +3,7 @@ import commands
 class noperacion(object):
 	"""docstring for operacion"""
 	def __init__(self,operacion):
-		self.estado = False
+
 		self.operacion = operacion
 		self.siguiente = None
 
@@ -11,7 +11,7 @@ class listaopera(object):
 	"""docstring for listaopera"""
 	def __init__(self):
 		self.primero = None
-
+		self.estado = False
 	def insertar(self, elemento):
 
 		if self.primero == None:

@@ -29,9 +29,12 @@ class inicio(object):
 		libro = raiz[0]
 		x=0
 		y=0
+
+
+
 		for child in raiz:
 			#print child.tag
-			if child.tag == 'matriz':
+			if child.tag == 'matriz':				
 				for child2 in child:
 					#print child2.tag
 					if child2.tag == 'x':
@@ -47,36 +50,44 @@ class inicio(object):
 
 
 		
-		topex = 0
-		topey = 0
-		while topey < y: #crear matriz
+
+		if cola.estado == False:
+
+			topex = 0
+			topey = 0
+			mat.estado= True
+			trans.estado = True
+
+
+			while topey < y: #crear matriz
 			
-			while topex < x:
+				while topex < x:
 
-				mat.insertar(topex,topey,str(topex)+ '-' +str(topey))
-				#print topex
+					mat.insertar(topex,topey,str(topex)+ '-' +str(topey))
+					#print topex
 
-				topex = topex +1	
+					topex = topex +1	
 
- 			#print topey
- 			topex = 0
-			topey = topey +1
+ 				#print topey
+ 				topex = 0
+				topey = topey +1
 
 
-		topex = 0
-		topey = 0
-		while topey < x: #crear matriz
+			topex = 0
+			topey = 0
+			while topey < x: #crear matriz
 			
-			while topex < y:
+				while topex < y:
 
-				trans.insertar(topex,topey,str(topex)+ '-' +str(topey))
-				#print topex
+					trans.insertar(topex,topey,str(topex)+ '-' +str(topey))
+					#print topex
 
-				topex = topex +1	
+					topex = topex +1	
 
- 			#print topey
- 			topex = 0
-			topey = topey +1
+ 				#print topey
+ 				topex = 0
+				topey = topey +1
+			cola.estado = True
 
 
 
@@ -275,18 +286,27 @@ class inicio(object):
 						print 'ruta equivocada'
 
 				elif des =='2':
-					if nodo.loper.primero == None: #ACA ME QUEDE
-						print 'No se ha cargado ningun archivo'
-					self.ResOpe(nodo.loper)
+					if nodo.matiz.estado == True: 
+						self.ResOpe(nodo.loper)
+					else:
+						print '---no se ha cargado ningun archivo---'
 
 				elif des =='3':
-					self.operarmatriz(nodo.matiz, nodo.trans)
+
+					if nodo.matiz.estado ==True:
+
+						self.operarmatriz(nodo.matiz, nodo.trans)
+					else: 
+						print '---no se ha cargado ningun archivo---'
 
 				elif des =='4':
 					self.users.recorrer()
 
+
 				elif des =='5':
 					nodo.loper.recorrer()
+					if nodo.loper.primero == None:
+						print 'la cola de operaciones esta vacia'
 
 				elif des =='6':
 					auxus= None

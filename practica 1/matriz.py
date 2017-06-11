@@ -269,6 +269,7 @@ class matriz(object):
     def __init__(self):
         self.ladox= listax()
         self.ladoy= listay()
+        self.estado = False
 
     def verificar(self, x, y): #verifica si existe un nodo en la matriz/buscar
         nodoyy = self.ladoy.primero
