@@ -213,7 +213,7 @@ class inicio(object):
 
 					if chun == '*' or chun == '+' or chun == '-':
 						
-						print 'los datos en la pila son los siguientes:----------'
+						print 'los datos en la pila son los siguientes:------------\n'
 						lip.recorrer()
 
 						signo = lip.pop()
@@ -230,12 +230,7 @@ class inicio(object):
 							lip.insertar(pila.nodopila(result))
 
 						elif signo == '-':
-							print primero
-							print segundo
-
 							result = int(primero) - int(segundo)
-							print 'prueba'
-							print result
 							lip.insertar(pila.nodopila(result))		
 
 						print 'el resultado es: '+ str(result)		
